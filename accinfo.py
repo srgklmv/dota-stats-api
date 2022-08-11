@@ -3,7 +3,10 @@ class Account:
 
     def __init__(self, name, id32):
         self.name = name
-        self.account_id = id32
+        self.id32 = id32
+
+    def create_config_file(self):
+        pass
 
 
 def get_user_data(name, id32):
