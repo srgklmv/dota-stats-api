@@ -6,20 +6,21 @@ def check_api():
     try:
         config = configparser.ConfigParser()
         config.read('config.ini')
-    except:
-        pass
+    except FileNotFoundError:
+        print('Config file not found.')
+        create_app_config()
     else:
-        pass
-    finally:
-        pass
+        print('Success.')
 
 
 def create_app_config():
+    print('Creating config file...')
     api_key = input('Enter your API key: ')
     with open('config.ini', 'w') as file:
         config = configparser.ConfigParser()
         config['SETTINGS'] = {'api': api_key}
         config.write(file)
+    print('Success.')
 
 
 def create_account():

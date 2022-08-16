@@ -1,5 +1,3 @@
-import accinfo
-
 def main():
     pass
 

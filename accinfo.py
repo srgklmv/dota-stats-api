@@ -15,8 +15,3 @@ class Account:
         config['ACCOUNT INFO'] = {key: value for key, value in zip(attributes, values)}
         with open(f'configs/{self.name}.ini', 'w') as file:
             config.write(file)
-
-
-def get_user_data(name, id32):
-    acc = Account(name, id32)
-    return acc
