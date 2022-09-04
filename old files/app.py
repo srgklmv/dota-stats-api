@@ -1,12 +1,10 @@
 import configparser
-import accinfo
-import os
 
 
 def create_app_config():
     print('Creating config file...')
     api_key = input('Enter your API key: ')
-    with open('config.ini', 'w') as file:
+    with open('../config.ini', 'w') as file:
         config = configparser.ConfigParser()
         config['SETTINGS'] = {'api': api_key}
         config.write(file)
@@ -15,7 +13,7 @@ def create_app_config():
 
 def check_api():
     try:
-        with open('config.ini', 'r') as file:
+        with open('../config.ini', 'r') as file:
             config = configparser.ConfigParser()
             config.read(file)
     except FileNotFoundError:
@@ -25,5 +23,17 @@ def check_api():
         print('Config file found.')
 
 
-def action_menu():
-    pass
+def action_menu(): # TODO
+
+    actions = {
+        '1': 'accounts_management()',
+        '2': 'stats_management()',
+        '3': 'change_api_key()',
+        '4': check_api()
+    }
+
+    print('# Action menu #')
+    action_key = input()
+    actions[action_key]
+
+action_menu()
