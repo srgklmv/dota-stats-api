@@ -1,12 +1,28 @@
 import configparser
-import os
+import requests as re
 
 
 class Account:
 
-    def __init__(self, name=None, id32=None):
+    API_KEY = None
+
+    def __init__(self, name=None, id32=None, vanity_url=None):
         self.name = name
         self.id32 = id32
+        self.vanity_url = vanity_url
+
+    def get_id(self):
+        acc_name = self.vanity_url.rstrip('/ ').split('/')[-1]
+
+        params = {
+            'key': self.API_KEY,
+            'vanityurl': acc_name
+        }
+
+        request = re.get('https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/',
+                         params=params)
+
+        self.id32 = request.json()['response']['steamid']
 
     def save_to_config(self):  # TODO rewrite to save only useful data
         """save account attributes to config"""
@@ -17,14 +33,9 @@ class Account:
         with open(f'configs/{self.name}.ini', 'w') as file:
             config.write(file)
 
-    def load_from_config(self, name):  # with or without ini (account name or file name) TODO
-        pass
-
-    def get_match_history(self):  # add restrictions to class object TODO
-        pass
-
-    def load_id(self):  # parse from web service TODO
-        pass
+    @classmethod
+    def set_steam_api_key(cls, key):
+        cls.API_KEY = key
 
 
 def create_account():
@@ -33,15 +44,3 @@ def create_account():
     account = Account(name, id32)
     account.save_to_config()
     print("Account successfully created.")
-
-
-def check_for_accounts():
-    print('Try to find existing accounts...')
-    configs = filter(lambda n: n.endswith('.ini'), os.listdir('configs'))
-    if configs:
-        print('Accounts were find. Full list here:')
-        print(*configs, sep='\n')
-    else:
-        print("Can't find any existing account. Creating now.")
-        create_account()
-        super()
