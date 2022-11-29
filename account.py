@@ -1,10 +1,10 @@
 import configparser
 import requests as re
+import os
+import sqlite3
 
 
 class Account:
-
-    API_KEY = None
 
     def __init__(self, name=None, id32=None, vanity_url=None):
         self.name = name
@@ -12,10 +12,12 @@ class Account:
         self.vanity_url = vanity_url
 
     def get_id(self):
+        """This id is not working in opendota"""
         acc_name = self.vanity_url.rstrip('/ ').split('/')[-1]
+        api_key = os.getenv('STEAM_API_KEY')
 
         params = {
-            'key': self.API_KEY,
+            'key': api_key,
             'vanityurl': acc_name
         }
 
@@ -33,14 +35,9 @@ class Account:
         with open(f'configs/{self.name}.ini', 'w') as file:
             config.write(file)
 
-    @classmethod
-    def set_steam_api_key(cls, key):
-        cls.API_KEY = key
+    def create_db(self):
+        pass
 
 
-def create_account():
-    name = input('Enter account name (used just for identify in program): ')
-    id32 = input('Enter account id in 32-bit format: ')
-    account = Account(name, id32)
-    account.save_to_config()
-    print("Account successfully created.")
+def set_steam_api_key(key):
+    os.environ['STEAM_API_KEY'] = key
