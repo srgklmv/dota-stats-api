@@ -1,8 +1,2 @@
-/file.py
-/test_data.txt
-/userguide.txt
-/config.ini
-/data/
-/.pytest_cache/
-/configs/
-/old files
+/venv/
+/jupyter_file.ipynb
