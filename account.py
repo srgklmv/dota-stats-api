@@ -1,19 +1,23 @@
 import configparser
 import requests as re
 import os
-import sqlite3
+import service
 
 
 class Account:
 
-    def __init__(self, name=None, id32=None, vanity_url=None):
+    name = service.Name()
+    id32 = service.ID()
+    id64 = service.ID()
+
+    def __init__(self, name=None, id32=None, id64=None):
         self.name = name
         self.id32 = id32
-        self.vanity_url = vanity_url
+        self.id64 = id64
 
     def get_id(self):
         """This id is not working in opendota"""
-        acc_name = self.vanity_url.rstrip('/ ').split('/')[-1]
+        acc_name = self.id64.rstrip('/ ').split('/')[-1]
         api_key = os.getenv('STEAM_API_KEY')
 
         params = {
