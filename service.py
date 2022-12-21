@@ -41,4 +41,4 @@ class ID:
 
     def __set__(self, instance, value):
         if self.id_check(value):
-            instance.__dict__[self.name] = value
+            instance.__dict__[self.name] = str(value)
