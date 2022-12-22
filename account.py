@@ -23,7 +23,7 @@ class Account:
         except ValueError:
             print(f"SteamID32 is not set in account '{self.name}'")
 
-    def save_to_config(self):  # TODO rewrite to save only useful data
+    def save_to_config(self):  # TODO rewrite
         """save account attributes to config"""
         config = configparser.ConfigParser()
         attributes = tuple(filter(lambda w: w[0] != '_', dir(self)))
@@ -32,7 +32,7 @@ class Account:
         with open(f'configs/{self.name}.ini', 'w') as file:
             config.write(file)
 
-    def create_db(self):
+    def create_db(self):  # TODO
         pass
 
 
